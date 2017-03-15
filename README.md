@@ -5,7 +5,7 @@
 ### Team Name : ButterflyEffect
 
 ### Team Member : 
-+ 201323162 Minjeong Sim
++ 201323162 Minjung Sim
 + 201420995 Sungmi Park
 + 201120862 Sungsoo Ahn 
 + 201220920 Ganghyeok Lee
