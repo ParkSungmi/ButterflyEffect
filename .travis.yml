@@ -3,9 +3,16 @@ jdk: oraclejdk8
 
 android:
   components:
+    - tools
+    - platform-tools
     - build-tools-19.0.1
     - android-22
-   
+
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 script:
     ./gradlew build connectedCheck
     
