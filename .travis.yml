@@ -1,8 +1,8 @@
 language: android
-
-<<<<<<< HEAD
+jdk: oraclejdk8
 env:
   - TERM=dumb
+
 before_install: 
   # Install base Android SDK
   - sudo apt-get update -qq 
@@ -26,25 +26,6 @@ before_install:
   - echo yes | android update sdk --filter extra-google-m2repository --no-ui --force > /dev/null 
   # Android SDK Build-tools
   - echo yes | android update sdk --all --filter build-tools-19.0.3 --no-ui --force > /dev/null 
-=======
-android:
-  components:
-    - tools
-    - build-tools-25.0.2
-    - platform-tools
-    - extra-android-m2repository
-    - extra-google-android-support
-    - android-16
-    - android-21
-    - android-22
-    - android-25
-licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
-    
-jdk: oraclejdk8
->>>>>>> bbdd5633b8c23023fe3a6403c2346dd29960e082
 
 script:
   ./gradlew build
