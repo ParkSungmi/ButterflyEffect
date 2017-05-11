@@ -1,52 +1,45 @@
 language: android
-jdk: oraclejdk8
-sudo: false
+jdk:
+  - oraclejdk8
+sudo: required
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java8-set-default
 
 env:
-    matrix:
-        - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
-        - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
-    global:
-        - ADB_INSTALL_TIMEOUT=10    #Time out to 10 mins
-
-before_cache:
-    - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
-cache:
-  directories:      #Cache all dirs under .gradle folder
-    - $HOME/.gradle/daemon      #Cache daemon logs
-    - $HOME/.gradle/native      #Cache library downloaded from the gradle dependency
-    - $HOME/.gradle/wrapper     #Cache the gradle
+  global:
+    - ADB_INSTALL_TIMEOUT=20
 
 android:
-    update_sdk: true
-    components:
-        - platform-tools
-        - tools
-        - build-tools-25.0.0
-        - android-25
+  components:
+    - platform-tools
+    - tools
+    - build-tools-25.0.2
+    - android-25
+    - android-21
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-support
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-21
 
-        # Additional components
-        - extra-google-google_play_services
-        - extra-google-m2repository
-        - extra-android-m2repository
+  licenses:
+     - 'android-sdk-license-.+'
 
-
-licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+before_install:
+  - chmod +x gradlew
+  - android list targets
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 before_script:
-    - mkdir "$ANDROID_SDK/licenses" || true
-    - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_SDK/licenses/android-sdk-license"
-    - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_SDK/licenses/android-sdk-preview-license"
-    - chmod +x gradlew      #Grand permissions
-    - android list targets
-    - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI    #Create AVD for given api
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 script:
-    - echo "Travis branch is $TRAVIS_BRANCH"
-    - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
-    - ./gradlew 
-
+  - travis_wait 60 ./gradlew clean connectedCheck -Dorg.gradle.java.home=/usr/lib/jvm/java-8-oracle
