@@ -7,8 +7,8 @@
     tools:context="ajou.butterflyeffect.touchablememory.Gallery">
 
     <GridLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="362dp"
+        android:layout_height="400dp"
         android:orientation="horizontal"
         android:columnCount="4"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,8 +17,39 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/gridLayout"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout">
 
     </GridLayout>
+
+    <LinearLayout
+        android:layout_width="369dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:layout_weight="0.03"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:text="Button" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
