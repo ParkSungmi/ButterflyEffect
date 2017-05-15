@@ -1,5 +1,6 @@
 package ajou.butterflyeffect.touchablememory;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,11 +24,18 @@ public class Gallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
+        Button btn_cancel = (Button) findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gallery.super.onBackPressed();
+            }
+        });
 
+
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
         gridLayout.removeAllViews();
         gridLayout.setColumnCount(4);
-
 
 
         for(int i=0; i<30; i++){
@@ -43,7 +53,17 @@ public class Gallery extends AppCompatActivity {
             imageView.setImageBitmap(resized);
             //imageView.setBackgroundColor(Color.BLACK);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(90, 90));
+            imageView.setTag(i);
 
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Gallery.this, Picture.class);
+
+                    intent.putExtra("index",Integer.toString((int)v.getTag()));
+                    startActivity(intent);
+                }
+            });
 
 
             GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);

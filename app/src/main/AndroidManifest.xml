@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Gallery" />
+        <activity android:name=".Picture"></activity>
     </application>
 
 </manifest>
