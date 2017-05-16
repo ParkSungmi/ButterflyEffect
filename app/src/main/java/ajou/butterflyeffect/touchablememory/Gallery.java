@@ -24,7 +24,7 @@ public class Gallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        Button btn_cancel = (Button) findViewById(R.id.btn_cancel);
+        Button btn_cancel = (Button) findViewById(R.id.gallery_btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
