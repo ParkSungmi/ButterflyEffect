@@ -18,27 +18,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 
 public class Picture extends AppCompatActivity {
 
     ViewPager pager;
 
-    String attachmentName = "bitmap";
-    String attachmentFileName = "bitmap.bmp";
-    String crlf = "\r\n";
-    String twoHyphens = "--";
-    String boundary =  "*****";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +39,7 @@ public class Picture extends AppCompatActivity {
         CustomAdapter adapter = new CustomAdapter(getLayoutInflater());
         pager.setAdapter(adapter);
 
-
+        pager.setCurrentItem(Integer.parseInt(a));
 
 
         Button btn_cancel = (Button)findViewById(R.id.picture_btn_cancel);
