@@ -1,12 +1,15 @@
 package ajou.butterflyeffect.touchablememory;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ import java.io.File;
 
 public class Gallery extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,6 @@ public class Gallery extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = Gallery.this.getResources().getDisplayMetrics();
         int deviceWidth = displayMetrics.widthPixels;
-        int deviceHeight = displayMetrics.heightPixels;
 
         String rootSD = Environment.getExternalStorageDirectory().toString();
         File galleryFolder = new File(rootSD + "/DCIM/TouchableMemory");
@@ -50,18 +53,11 @@ public class Gallery extends AppCompatActivity {
         gridLayout.removeAllViews();
         gridLayout.setColumnCount(4);
 
-        Toast.makeText(Gallery.this, pictureLists[0].getName(), Toast.LENGTH_LONG).show();
 
         for(int i=0; i<pictureLists.length; i++){
 
-            ImageView imageView = new ImageView(this);
+            ImageView imageView = new ImageView(Gallery.this);
             imageView.setPadding(5,10,5,10);
-
-            /*
-            Resources r = this.getApplicationContext().getResources();
-            BitmapDrawable bd = (BitmapDrawable) r.getDrawable(R.drawable.rose);
-            Bitmap yourBitmap = bd.getBitmap();
-            */
 
             Bitmap yourBitmap = BitmapFactory.decodeFile(pictureLists[i].getAbsolutePath());
 
@@ -100,11 +96,96 @@ public class Gallery extends AppCompatActivity {
             GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colSpan);
             gridLayout.addView(imageView, gridParam);
 
-
-
         }
 
 
-
     }
+
+
+
+
 }
+
+    /*
+    public class loadImg extends AsyncTask<String, Void, Void>{
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            DisplayMetrics displayMetrics = Gallery.this.getResources().getDisplayMetrics();
+            int deviceWidth = displayMetrics.widthPixels;
+
+            String rootSD = Environment.getExternalStorageDirectory().toString();
+            File galleryFolder = new File(rootSD + "/DCIM/TouchableMemory");
+            File pictureLists[] = galleryFolder.listFiles();
+
+            GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
+            gridLayout.removeAllViews();
+            gridLayout.setColumnCount(4);
+
+            Toast.makeText(Gallery.this, pictureLists[0].getName(), Toast.LENGTH_LONG).show();
+
+            for(int i=0; i<pictureLists.length; i++){
+
+                ImageView imageView = new ImageView(Gallery.this);
+                imageView.setPadding(5,10,5,10);
+
+                Bitmap yourBitmap = BitmapFactory.decodeFile(pictureLists[i].getAbsolutePath());
+
+
+                int bitmapWidth = yourBitmap.getWidth();
+                int bitmapHeight = yourBitmap.getHeight();
+                int newWidth = (deviceWidth-100)/4;
+                int newHeight = bitmapHeight * newWidth / bitmapWidth;
+
+
+                Bitmap resized = Bitmap.createScaledBitmap(yourBitmap, newWidth, newHeight, true);
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(newWidth, newWidth));
+
+                //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+                imageView.setImageBitmap(resized);
+                //imageView.setBackgroundColor(Color.BLACK);
+                imageView.setTag(Integer.toString(i));
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Gallery.this, Picture.class);
+                        intent.putExtra("index",(String)v.getTag());
+
+                        startActivity(intent);
+                    }
+                });
+
+
+                GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+                GridLayout.Spec colSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+
+
+                GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colSpan);
+                gridLayout.addView(imageView, gridParam);
+
+            }
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            dialog.dismiss();
+
+        }
+    }
+    */
+

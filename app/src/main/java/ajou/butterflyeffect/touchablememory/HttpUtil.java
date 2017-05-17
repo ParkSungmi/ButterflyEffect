@@ -22,18 +22,14 @@ import java.net.URL;
  * Created by tpdlq on 2017-05-16.
  */
 
-public class HttpUtil extends AsyncTask<Resources, Void, Void> {
+public class HttpUtil extends AsyncTask<String, Void, Void> {
 
     @Override
-    public Void doInBackground(Resources... params) {
+    public Void doInBackground(String... params) {
 
-        //InputStream is = params[0].openRawResource(R.raw.rose);
+        String pictureName = params[0];
+        String picturePath = params[1];
 
-
-        String attachmentName = "rose";
-        String attachmentFileName = "rose.jpg";
-        String crlf = "\r\n";
-        String twoHyphens = "--";
         String boundary = "*****";
 
         try {
@@ -48,7 +44,6 @@ public class HttpUtil extends AsyncTask<Resources, Void, Void> {
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
             httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            //httpURLConnection.setRequestProperty("id", "image");
 
             DataOutputStream request = new DataOutputStream(httpURLConnection.getOutputStream());
 
@@ -56,20 +51,14 @@ public class HttpUtil extends AsyncTask<Resources, Void, Void> {
             // String param = URLEncoder.encode("aaaaaaa","UTF-8");
             //request.writeBytes("aaaaa");
 
-
-
-
             //request.writeBytes(twoHyphens + boundary + crlf);
             //request.writeBytes("Content-Disposition: form-data; test=\"" + attachmentName + "\";filename=\"" + attachmentFileName + "\"" + crlf);
             //request.writeBytes(crlf);
 
 
+            //String cameraTempFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/5.jpg";
 
-
-
-            String cameraTempFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/5.jpg";
-
-            File file = new File(cameraTempFilePath);
+            File file = new File(picturePath);
 
 
 
@@ -95,36 +84,6 @@ public class HttpUtil extends AsyncTask<Resources, Void, Void> {
             request.writeBytes("ok");
 
 
-                /*
-
-                 ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-                int nRead;
-                byte[] data = new byte[16384];
-
-                while ((nRead = is.read(data, 0, data.length)) != -1) {
-                    buffer.write(data, 0, nRead);
-                }
-
-                buffer.flush();
-*/
-            //data = buffer.toByteArray();
-/*
-                    byte[] pixels = new byte[bitmap.getWidth() * bitmap.getHeight()];
-                    for (int i = 0; i < bitmap.getWidth(); ++i) {
-                        for (int j = 0; j < bitmap.getHeight(); ++j) {
-                            //we're interested only in the MSB of the first byte,
-                            //since the other 3 bytes are identical for B&W images
-                            pixels[i + j] = (byte) ((bitmap.getPixel(i, j) & 0x80) >> 7);
-                        }
-                    }
-*/
-            //request.write(pixels);
-
-            //request.write(buffer.toByteArray());
-            //request.write(bytes);
-            //request.writeBytes(crlf);
-            //request.writeBytes(twoHyphens + boundary + twoHyphens + crlf);
 
 
             request.flush();

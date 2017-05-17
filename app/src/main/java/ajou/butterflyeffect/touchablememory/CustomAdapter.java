@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -50,7 +51,7 @@ public class CustomAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(final ViewGroup container, int position) {
+    public Object instantiateItem(final ViewGroup container, final int position) {
         View view = null;
         view = inflater.inflate(R.layout.viewpager_childview, null);
         ImageView img = (ImageView) view.findViewById(R.id.img_viewpager_childimage);
@@ -59,18 +60,15 @@ public class CustomAdapter extends PagerAdapter {
         Bitmap yourBitmap = BitmapFactory.decodeFile(pictureLists[position].getAbsolutePath());
         img.setImageBitmap(yourBitmap);
 
-        img.setOnClickListener(new View.OnClickListener() {
+        img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 // Toast.makeText(container.getContext(), cameraTempFilePath, Toast.LENGTH_LONG).show();
-
-                //Toast.makeText(container.getContext(), "Test", Toast.LENGTH_LONG).show();
-                new HttpUtil().execute(container.getResources());
-
-
+                Toast.makeText(container.getContext(), "Send Picture", Toast.LENGTH_LONG).show();
+                new HttpUtil().execute(pictureLists[position].getName(), pictureLists[position].getAbsolutePath());
+                return false;
             }
-        });
-
+        }) ;
 
         container.addView(view);
 
