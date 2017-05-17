@@ -2,7 +2,7 @@ package ajou.butterflyeffect.touchablememory;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
@@ -11,14 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,53 +21,55 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Iterator;
 
 
 /**
  * Created by tpdlq on 2017-05-15.
  */
 
-public class CustomAdapter extends PagerAdapter{
+public class CustomAdapter extends PagerAdapter {
 
     LayoutInflater inflater;
+    File pictureLists[];
 
-    public CustomAdapter(LayoutInflater inflater){
+    public CustomAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
+
+        String rootSD = Environment.getExternalStorageDirectory().toString();
+        File galleryFolder = new File(rootSD + "/DCIM/TouchableMemory");
+        pictureLists = galleryFolder.listFiles();
+
     }
 
 
     @Override
     public int getCount() {
-        return 30;
+        return pictureLists.length;
     }
 
     @Override
     public Object instantiateItem(final ViewGroup container, int position) {
         View view = null;
         view = inflater.inflate(R.layout.viewpager_childview, null);
-        ImageView img = (ImageView)view.findViewById(R.id.img_viewpager_childimage);
-        img.setImageResource(R.drawable.rose);
+        ImageView img = (ImageView) view.findViewById(R.id.img_viewpager_childimage);
+
+
+        Bitmap yourBitmap = BitmapFactory.decodeFile(pictureLists[position].getAbsolutePath());
+        img.setImageBitmap(yourBitmap);
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                   // Toast.makeText(container.getContext(), cameraTempFilePath, Toast.LENGTH_LONG).show();
+                // Toast.makeText(container.getContext(), cameraTempFilePath, Toast.LENGTH_LONG).show();
 
                 //Toast.makeText(container.getContext(), "Test", Toast.LENGTH_LONG).show();
-                new HttpUtil2().execute(container.getResources());
-
+                new HttpUtil().execute(container.getResources());
 
 
             }
         });
-
 
 
         container.addView(view);
@@ -82,7 +79,7 @@ public class CustomAdapter extends PagerAdapter{
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
     @Override
@@ -90,11 +87,10 @@ public class CustomAdapter extends PagerAdapter{
         return view == object;
     }
 
+}
 
-
+/*
     public class HttpUtil2 extends AsyncTask<Resources, Void, Void> {
-
-        //Resources r;
 
         @Override
         public Void doInBackground(Resources... params) {
@@ -198,7 +194,7 @@ public class CustomAdapter extends PagerAdapter{
                 //request.writeBytes(crlf);
                 //request.writeBytes(twoHyphens + boundary + twoHyphens + crlf);
 
-
+/*
                 request.flush();
                 request.close();
 
@@ -236,20 +232,15 @@ public class CustomAdapter extends PagerAdapter{
             return null;
 
         }
-
-
+*/
+/*
 
     }
 
 
 }
 
+*/
 
 
 
-
-
-/*
-
-
-        */

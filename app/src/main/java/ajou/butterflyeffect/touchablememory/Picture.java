@@ -17,8 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
+import android.widget.Toast;
 
 
 public class Picture extends AppCompatActivity {
@@ -33,13 +32,14 @@ public class Picture extends AppCompatActivity {
         setContentView(R.layout.activity_picture);
 
         Intent intent = getIntent();
-        String a = (String)intent.getExtras().get("index");
+        String index = (String)intent.getExtras().get("index");
+
 
         pager = (ViewPager)findViewById(R.id.pager);
         CustomAdapter adapter = new CustomAdapter(getLayoutInflater());
         pager.setAdapter(adapter);
 
-        pager.setCurrentItem(Integer.parseInt(a));
+        pager.setCurrentItem(Integer.parseInt(index));
 
 
         Button btn_cancel = (Button)findViewById(R.id.picture_btn_cancel);
