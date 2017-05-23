@@ -3,6 +3,8 @@ package ajou.butterflyeffect.touchablememory;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -29,12 +31,13 @@ public class HttpUtil extends AsyncTask<String, Void, Void> {
 
         String pictureName = params[0];
         String picturePath = params[1];
+        String urlStr = params[2];
 
         String boundary = "*****";
 
         try {
             HttpURLConnection httpURLConnection = null;
-            URL url = new URL("http://52.79.156.99:8080/upload");
+            URL url = new URL(urlStr);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setUseCaches(false);
             httpURLConnection.setDoOutput(true);
@@ -84,8 +87,6 @@ public class HttpUtil extends AsyncTask<String, Void, Void> {
             request.writeBytes("ok");
 
 
-
-
             request.flush();
             request.close();
 
@@ -111,6 +112,58 @@ public class HttpUtil extends AsyncTask<String, Void, Void> {
                 Log.d("dbg>>", response);
 
                 responseStream.close();
+
+
+                SystemClock.sleep(4000);
+
+                Log.d("dbgaaaaaa>>","start");
+
+                HttpURLConnection httpURLConnection2 = null;
+                URL url2 = new URL("http://52.79.156.99:8080/doit");
+                httpURLConnection2 = (HttpURLConnection) url2.openConnection();
+                httpURLConnection2.setUseCaches(false);
+                httpURLConnection2.setDoOutput(true);
+
+
+                httpURLConnection2.setRequestMethod("POST");
+                httpURLConnection2.setRequestProperty("Connection", "Keep-Alive");
+                httpURLConnection2.setRequestProperty("Cache-Control", "no-cache");
+                httpURLConnection2.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + "********");
+
+                DataOutputStream request2 = new DataOutputStream(httpURLConnection2.getOutputStream());
+                request2.writeBytes("finish");
+                request2.flush();
+                request2.close();
+
+                int code2 = httpURLConnection2.getResponseCode();
+                if (code2 == httpURLConnection2.HTTP_OK) {
+                    InputStream responseStream2 = new BufferedInputStream(httpURLConnection2.getInputStream());
+
+                    BufferedReader responseStreamReader2 = new BufferedReader(new InputStreamReader(responseStream2));
+
+                    String line2 = "";
+                    StringBuilder stringBuilder2 = new StringBuilder();
+
+                    while ((line2 = responseStreamReader2.readLine()) != null) {
+                        stringBuilder2.append(line2).append("\n");
+                    }
+                    responseStreamReader2.close();
+
+                    String response2 = stringBuilder2.toString();
+
+                    Log.d("dbg222>>", response2);
+
+                    responseStream2.close();
+                }
+
+
+                httpURLConnection2.disconnect();
+
+
+
+
+
+
             }
 
             httpURLConnection.disconnect();

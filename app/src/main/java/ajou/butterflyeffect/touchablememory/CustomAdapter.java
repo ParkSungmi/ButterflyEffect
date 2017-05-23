@@ -65,7 +65,7 @@ public class CustomAdapter extends PagerAdapter {
             public boolean onLongClick(View v) {
                 // Toast.makeText(container.getContext(), cameraTempFilePath, Toast.LENGTH_LONG).show();
                 Toast.makeText(container.getContext(), "Send Picture", Toast.LENGTH_LONG).show();
-                new HttpUtil().execute(pictureLists[position].getName(), pictureLists[position].getAbsolutePath());
+                new HttpUtil().execute(pictureLists[position].getName(), pictureLists[position].getAbsolutePath(), "http://52.79.156.99:8080/upload");
                 return false;
             }
         }) ;
