@@ -77,6 +77,7 @@ public class Gallery extends AppCompatActivity {
             imageView.setImageBitmap(resized);
             //imageView.setBackgroundColor(Color.BLACK);
             imageView.setTag(Integer.toString(i));
+            imageView.setContentDescription(pictureLists[i].getName()+" 이미지");
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
