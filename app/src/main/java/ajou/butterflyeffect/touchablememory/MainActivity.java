@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, Regist.class);
                         startActivity(intent);
 

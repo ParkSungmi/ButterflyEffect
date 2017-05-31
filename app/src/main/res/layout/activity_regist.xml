@@ -7,7 +7,7 @@
     tools:context="ajou.butterflyeffect.touchablememory.Regist">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/regist_text"
         android:layout_width="244dp"
         android:layout_height="59dp"
         android:ems="10"
@@ -23,14 +23,14 @@
         android:layout_marginTop="50dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_regist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="등록"
         tools:layout_editor_absoluteY="195dp"
         tools:layout_editor_absoluteX="35dp"
         android:layout_marginTop="46dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_below="@+id/regist_text"
+        android:layout_alignLeft="@+id/regist_text"
+        android:layout_alignStart="@+id/regist_text" />
 </RelativeLayout>
