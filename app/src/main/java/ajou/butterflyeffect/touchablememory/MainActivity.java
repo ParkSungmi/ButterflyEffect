@@ -57,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, Regist.class);
+                        startActivity(intent);
+
                     }
                 });
 
