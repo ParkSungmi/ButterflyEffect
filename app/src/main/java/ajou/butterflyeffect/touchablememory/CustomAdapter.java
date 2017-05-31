@@ -77,7 +77,7 @@ public class CustomAdapter extends PagerAdapter {
         }) ;
 
         container.addView(view);
-ㅊ
+
         return view;
     }
 
