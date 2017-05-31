@@ -1,11 +1,16 @@
 package ajou.butterflyeffect.touchablememory;
 
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Regist extends AppCompatActivity {
 
@@ -32,7 +37,20 @@ public class Regist extends AppCompatActivity {
 
                     if(response.equals("ok")){
 
+                        try {
+                            File root = new File(Environment.getExternalStorageDirectory(), "TouchableMemory");
+                            if (!root.exists()) {
+                                root.mkdirs();
+                            }
+                            File gpxfile = new File(root, "id.txt");
+                            FileWriter writer = new FileWriter(gpxfile);
+                            writer.write(text);
+                            writer.flush();
+                            writer.close();
 
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                         Regist.super.onBackPressed();
                     }
