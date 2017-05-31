@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class CustomAdapter extends PagerAdapter {
     LayoutInflater inflater;
     File pictureLists[];
 
+
     public CustomAdapter(LayoutInflater inflater) {
         this.inflater = inflater;
 
@@ -59,6 +61,10 @@ public class CustomAdapter extends PagerAdapter {
 
         Bitmap yourBitmap = BitmapFactory.decodeFile(pictureLists[position].getAbsolutePath());
         img.setImageBitmap(yourBitmap);
+        img.setContentDescription(pictureLists[position].getName().split("\\.")[0]);
+
+
+
 
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -71,7 +77,7 @@ public class CustomAdapter extends PagerAdapter {
         }) ;
 
         container.addView(view);
-
+ㅊ
         return view;
     }
 

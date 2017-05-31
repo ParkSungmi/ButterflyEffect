@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -28,10 +30,12 @@ import java.io.File;
 
 public class Gallery extends AppCompatActivity {
 
+    TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_gallery);
 
         Button btn_cancel = (Button) findViewById(R.id.gallery_btn_cancel);
@@ -81,13 +85,20 @@ public class Gallery extends AppCompatActivity {
 
             imageView.setContentDescription(name + " 이미지");
 
+
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+                    //tts.speak("이미지 화면입니다. 이미지 선택을 원하시면 화면을 길게 눌러주세요.", TextToSpeech.QUEUE_FLUSH, null);
+
                     Intent intent = new Intent(Gallery.this, Picture.class);
                     intent.putExtra("index",(String)v.getTag());
 
                     startActivity(intent);
+
+
                 }
             });
 
