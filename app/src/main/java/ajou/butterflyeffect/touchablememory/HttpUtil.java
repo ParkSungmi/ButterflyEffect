@@ -13,6 +13,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -131,7 +132,34 @@ public class HttpUtil extends AsyncTask<String, Void, Void> {
                 httpURLConnection2.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + "********");
 
                 DataOutputStream request2 = new DataOutputStream(httpURLConnection2.getOutputStream());
-                request2.writeBytes("finish");
+
+                File root = new File(Environment.getExternalStorageDirectory(), "TouchableMemory");
+
+                if (!root.exists()) {
+                    Log.d("err","");
+                }
+
+                //Get the text file
+                File txtfile = new File(root,"id.txt");
+
+                //Read text from file
+                StringBuilder text = new StringBuilder();
+                String txtline="";
+
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(txtfile));
+
+                    txtline = br.readLine();
+
+                    Log.d("test>>>>", txtline);
+
+                    br.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                request2.writeBytes(txtline);
                 request2.flush();
                 request2.close();
 

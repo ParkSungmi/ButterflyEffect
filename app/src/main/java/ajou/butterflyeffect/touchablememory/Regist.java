@@ -3,6 +3,7 @@ package ajou.butterflyeffect.touchablememory;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,20 +30,36 @@ public class Regist extends AppCompatActivity {
         btn_regist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String text="";
                 try{
-                    String text = regist_text.getText().toString();
+                    text = regist_text.getText().toString();
                     int number = Integer.parseInt(text);
 
-                    String response  = new HttpUtil2().execute("http://52.79.156.99:8080/regist", text).get();
+                }
+                catch (Exception e){
+                    Toast.makeText(Regist.this, "wrong format", Toast.LENGTH_SHORT).show();
+                }
 
-                    if(response.equals("ok")){
+                try {
+                    String response = new HttpUtil2().execute("http://52.79.156.99:8080/register", text).get();
 
+                    Log.d("aaaaaaaaaaa>> ",response);
+
+
+                    if (response.equals("ok\n")) {
                         try {
                             File root = new File(Environment.getExternalStorageDirectory(), "TouchableMemory");
+                            //File root = Environment.getExternalStorageDirectory();
                             if (!root.exists()) {
                                 root.mkdirs();
                             }
-                            File gpxfile = new File(root, "id.txt");
+
+                            File gpxfile = new File(root+ "/id.txt");
+
+                            if(!gpxfile.exists()){
+                                gpxfile.createNewFile();
+                            }
+
                             FileWriter writer = new FileWriter(gpxfile);
                             writer.write(text);
                             writer.flush();
@@ -53,20 +70,15 @@ public class Regist extends AppCompatActivity {
                         }
 
                         Regist.super.onBackPressed();
-                    }
-                    else if(response.equals("fail")){
+                    } else if (response.equals("false\n")) {
                         Toast.makeText(Regist.this, "fail to regist", Toast.LENGTH_LONG).show();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(Regist.this, "error", Toast.LENGTH_LONG).show();
                     }
 
-
-
-
                 }
                 catch (Exception e){
-                    Toast.makeText(Regist.this, "wrong format", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
 
             }
