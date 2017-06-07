@@ -59,14 +59,9 @@ Develop environment
  > layout for viewpager in acitivity_gallery
 
 
-Compile and Run
+License
 ====================
+[MIT][License]
 
-
-
-Function
-====================
-
-
-
+[License]: https://en.wikipedia.org/wiki/MIT_License
 
