@@ -11,6 +11,11 @@
 + 201220920 Ganghyeok Lee
 
 ### Description
+The system of this project has server component, arduino component, and android application component.  
+This repository is related with android application component.  
+Other repositories URL is as follows:
+> server component : https://github.com/ParkSungmi/ButterflyEffect-server  
+> arduino component : https://github.com/ParkSungmi/ButterflyEffect-arduino  
 
 
 ### Develop environment
